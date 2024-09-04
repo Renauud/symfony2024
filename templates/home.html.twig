@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %} <title>Accueil {{parent()}} </title> {% endblock %}
+
+{% block body %}
+    {% block backhome %}{% endblock %}
+    {% block content %}
+
+        <h1>Bienvenue sur CRUDcroustillant</h1>
+        <img src={{ asset('images/homePageBurger.png') }} alt="home image" width="25%">
+
+    {% endblock %}
+    
+{% endblock %}
