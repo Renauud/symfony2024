@@ -2,15 +2,13 @@
 
 namespace App\DataFixtures;
  
-// use App\Entity\Pain;
-// use App\Entity\Product;
 use App\Entity\Sauce;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
  
 class SauceFixtures extends Fixture
 {
-    private const SAUCE_REFERENCE = 'Sauce';
+    public const SAUCE_REFERENCE = 'Sauce';
     
     public function load(ObjectManager $manager)
     {

@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 class CommentaireFixtures extends Fixture
 {
 
-    private const COMMENTAIRE_REFERENCE = 'Commentaire';
+    public const COMMENTAIRE_REFERENCE = 'Commentaire';
 
     
     public function load(ObjectManager $manager): void

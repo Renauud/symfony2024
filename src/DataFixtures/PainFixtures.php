@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class PainFixtures extends Fixture
 {
-    private const PAIN_REFERENCE = 'Pain';
+    public const PAIN_REFERENCE = 'Pain';
     public function load(ObjectManager $manager)
     {
         $nomsPains = [

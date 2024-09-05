@@ -50,4 +50,8 @@ class Burger
 
         return $this;
     }
+
+    // public function addSauce(string $nomSauce){
+    //     $this->sauce = $nomSauce;
+    // }
 }
