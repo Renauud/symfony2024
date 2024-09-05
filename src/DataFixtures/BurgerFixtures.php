@@ -22,14 +22,17 @@ class BurgerFixtures extends Fixture
         $sauceBiggy = $this->getReference(SauceFixtures::SAUCE_REFERENCE . '_4');
         $sauceAndalouse = $this->getReference(SauceFixtures::SAUCE_REFERENCE . '_5');
 
-        $pain = $this->getReference(PainFixtures::PAIN_REFERENCE . '_0');
-        $oignon1 = $this->getReference(OignonFixtures::OIGNON_REFERENCE . '_0');
-        $oignon2 = $this->getReference(OignonFixtures::OIGNON_REFERENCE . '_1');
+        $painBurgerBrioche = $this->getReference(PainFixtures::PAIN_REFERENCE . '_0');
+        $painBurgerSesame = $this->getReference(PainFixtures::PAIN_REFERENCE . '_1');
+        $painBurgerClassique = $this->getReference(PainFixtures::PAIN_REFERENCE . '_2');
 
-        // $image = new Image();
-        // $image->setUrl('');
-        // $image->setAltText('burgerimg1');
-        // $manager->persist($image);
+        $oignonsJaunes = $this->getReference(OignonFixtures::OIGNON_REFERENCE . '_0');
+        $oignonsRouges = $this->getReference(OignonFixtures::OIGNON_REFERENCE . '_1');
+        $oignonsCaramelises = $this->getReference(OignonFixtures::OIGNON_REFERENCE . '_2');
+
+        $imageBurger1 = $this->getReference(ImageFixtures::IMAGE_REFERENCE . '_0');
+        $imageBurger2 = $this->getReference(ImageFixtures::IMAGE_REFERENCE . '_1');
+        $imageBurger3 = $this->getReference(ImageFixtures::IMAGE_REFERENCE . '_2');
 
         // $commentaire1 = new Commentaire();
         // $commentaire1->setContenu('burgercom1');
@@ -40,6 +43,7 @@ class BurgerFixtures extends Fixture
         // $manager->persist($commentaire2);
 
         // $burger = new Burger();
+        // $burger->addCommentaire($commentaire2);
         // $burger->setNom('Burger Spécial');
         // $burger->setPain($pain);
         // $burger->addSauce($sauceBiggy);
@@ -49,7 +53,7 @@ class BurgerFixtures extends Fixture
         // $burger->setImage($image);
         // $burger->addCommentaire($commentaire1);
         // $burger->addCommentaire($commentaire2);
-
+        
         // $manager->persist($burger);
 
         $manager->flush();
