@@ -15,12 +15,12 @@ class CommentaireFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $listCommentaires = [
-            'commentaire1',
-            'commentaire2',
-            'commentaire3',
-            'commentaire4',
-            'commentaire5',
-            'commentaire6',
+            'commentaire1 SUPER',
+            'commentaire2 SUPER',
+            'commentaire3 SUPER',
+            'commentaire4 NUL',
+            'commentaire5 NUL',
+            'commentaire6 BOF',
         ];
 
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BurgerRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BurgerRepository::class)]
@@ -21,11 +22,11 @@ class Burger
     private $pain;
 
     #[ORM\ManyToMany(targetEntity: Sauce::class, inversedBy: 'burger')]
-    private $sauce;
+    private Collection $sauce;
 
     #[ORM\OneToOne(targetEntity: Image::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $image;
+    private ?Image $image = null;
 
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'burger')]
     #[ORM\JoinColumn(nullable :false)]
@@ -51,7 +52,91 @@ class Burger
         return $this;
     }
 
-    public function addSauce(string $nomSauce){
-        $this->sauce = $nomSauce;
+    public function getPain(): ?Pain
+    {
+        return $this->pain;
+    }
+
+    public function setPain(?Pain $pain): static
+    {
+        $this->pain = $pain;
+
+        return $this;
+    }
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getSauces(): Collection
+    {
+        return $this->sauce;
+    }
+
+    public function addSauce(Sauce $sauce)
+    {
+        if (!$this->sauce->contains($sauce)) {
+            $this->sauce[] = $sauce;
+        }
+        return $this;
+    }
+    public function removeSauce(Sauce $sauce): static
+    {
+        $this->sauce->removeElement($sauce);
+
+        return $this;
+    }
+    public function getcommentaire(): Collection
+    {
+        return $this->commentaire;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): static
+    {
+        if (!$this->commentaire->contains($commentaire)) {
+            $this->commentaire[] = $commentaire;
+            $commentaire->setBurger($this);
+        }
+
+        return $this;
+    }
+    public function removeCommentaire(Commentaire $commentaire): static
+    {
+        if ($this->commentaire->removeElement($commentaire)) {
+            // Si le commentaire appartenait à ce burger, on l'enlève aussi de l'autre côté
+            if ($commentaire->getBurger() === $this) {
+                $commentaire->setBurger(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOignons(): Collection
+    {
+        return $this->oignon;
+    }
+
+    public function addOignon(Oignon $oignon): static
+    {
+        if (!$this->oignon->contains($oignon)) {
+            $this->oignon[] = $oignon;
+        }
+
+        return $this;
+    }
+
+    public function removeOignon(Oignon $oignon): static
+    {
+        $this->oignon->removeElement($oignon);
+
+        return $this;
     }
 }

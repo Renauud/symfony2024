@@ -9,9 +9,10 @@ use App\Entity\Oignon;
 use App\Entity\Image;
 use App\Entity\Commentaire;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class BurgerFixtures extends Fixture
+class BurgerFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -34,28 +35,60 @@ class BurgerFixtures extends Fixture
         $imageBurger2 = $this->getReference(ImageFixtures::IMAGE_REFERENCE . '_1');
         $imageBurger3 = $this->getReference(ImageFixtures::IMAGE_REFERENCE . '_2');
 
-        // $commentaire1 = new Commentaire();
-        // $commentaire1->setContenu('burgercom1');
-        // $manager->persist($commentaire1);
+        $commentaire1 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_0');
+        $commentaire2 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_1');
+        $commentaire3 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_2');
+        $commentaire4 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_3');
+        $commentaire5 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_4');
+        $commentaire6 = $this->getReference(CommentaireFixtures::COMMENTAIRE_REFERENCE . '_5');
 
-        // $commentaire2 = new Commentaire();
-        // $commentaire2->setContenu('burgercom2');
-        // $manager->persist($commentaire2);
 
-        // $burger = new Burger();
-        // $burger->addCommentaire($commentaire2);
-        // $burger->setNom('Burger Spécial');
-        // $burger->setPain($pain);
-        // $burger->addSauce($sauceBiggy);
-        // $burger->addSauce($sauceBlanche);
-        // $burger->addOignon($oignon1);
-        // $burger->addOignon($oignon2);
-        // $burger->setImage($image);
-        // $burger->addCommentaire($commentaire1);
-        // $burger->addCommentaire($commentaire2);
+        //Meilleur Burger
+        $burgerSuperbe = new Burger();
+        $burgerSuperbe->setNom('Burger Super');
+        $burgerSuperbe->setPain($painBurgerBrioche);
+        $burgerSuperbe->addSauce($sauceBiggy);
+        $burgerSuperbe->addSauce($sauceBlanche);
+        $burgerSuperbe->addOignon($oignonsCaramelises);
+        $burgerSuperbe->addOignon($oignonsCaramelises);
+        $burgerSuperbe->setImage($imageBurger1);
+        $burgerSuperbe->addCommentaire($commentaire1);
+        $burgerSuperbe->addCommentaire($commentaire2);
+        $burgerSuperbe->addCommentaire($commentaire3);
+
+        //Mid Burger
+        $burgerMid = new Burger();
+        $burgerMid->setNom('Burger Mid');
+        $burgerMid->setPain($painBurgerSesame);
+        $burgerMid->addSauce($sauceMayonnaise);
+        $burgerMid->setImage($imageBurger2);
+        $burgerMid->addCommentaire($commentaire6);
         
-        // $manager->persist($burger);
+        //Pire Burger
+        $burgerNul = new Burger();
+        $burgerNul->setNom('Burger Nul');
+        $burgerNul->setPain($painBurgerClassique);
+        $burgerNul->addSauce($sauceKetchup);
+        $burgerNul->setImage($imageBurger3);
+        $burgerNul->addCommentaire($commentaire4);
+        $burgerNul->addCommentaire($commentaire5);
+
+        
+        $manager->persist($burgerSuperbe);
+        $manager->persist($burgerNul);
+        $manager->persist($burgerMid);
 
         $manager->flush();
     }
+
+    public function getDependencies(){
+        return [
+            SauceFixtures::class,
+            PainFixtures::class,
+            OignonFixtures::class,
+            ImageFixtures::class,
+            CommentaireFixtures::class
+        ];
+    }
+    
 }
