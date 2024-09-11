@@ -6,9 +6,8 @@
         {% endblock %}
     </head>
     <body>
-        {% block backhome %}
-            <a href="{{ path('home') }}"> Home </a>
-        {% endblock %}
+        {% include '_header.html.twig' %}
         {% block content %}{% endblock %}
+        {% include '_footer.html.twig' %}
     </body>
 </html>

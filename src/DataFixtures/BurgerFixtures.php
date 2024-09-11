@@ -70,6 +70,7 @@ class BurgerFixtures extends Fixture implements DependentFixtureInterface
         $burgerMid = new Burger();
         $burgerMid->setNom('Burger Mid');
         $burgerMid->setPain($painBurgerSesame);
+        $burgerMid->addOignon($oignonsJaunes);
         $burgerMid->addSauce($sauceMayonnaise);
         $burgerMid->setImage($imageBurger2);
         $burgerMid->addCommentaire($commentaire6);
