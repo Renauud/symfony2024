@@ -14,6 +14,16 @@ use Doctrine\Persistence\ObjectManager;
 
 class BurgerFixtures extends Fixture implements DependentFixtureInterface
 {
+
+    public function getDependencies(){
+        return [
+            SauceFixtures::class,
+            PainFixtures::class,
+            OignonFixtures::class,
+            ImageFixtures::class,
+            CommentaireFixtures::class
+        ];
+    }
     public function load(ObjectManager $manager): void
     {
         $sauceBlanche = $this->getReference(SauceFixtures::SAUCE_REFERENCE . '_0');
@@ -79,16 +89,6 @@ class BurgerFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($burgerMid);
 
         $manager->flush();
-    }
-
-    public function getDependencies(){
-        return [
-            SauceFixtures::class,
-            PainFixtures::class,
-            OignonFixtures::class,
-            ImageFixtures::class,
-            CommentaireFixtures::class
-        ];
     }
     
 }

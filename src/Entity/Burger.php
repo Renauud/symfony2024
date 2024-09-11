@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BurgerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +35,13 @@ class Burger
 
     #[ORM\ManyToMany(targetEntity: Oignon::class, inversedBy: 'burger')]
     private Collection $oignon;
+
+    public function __construct()
+    {
+        $this->sauce = new ArrayCollection();
+        $this->commentaire = new ArrayCollection();
+        $this->oignon = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
