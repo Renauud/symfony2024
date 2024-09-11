@@ -20,3 +20,9 @@ a{
 a:hover{
     color: white;
 }
+
+footer{
+    color: blueviolet;
+    font-weight: bolder;
+    text-align: center;
+}
