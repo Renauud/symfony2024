@@ -16,7 +16,7 @@ class Commentaire
     #[ORM\Column()]
     private ?string $contenu = null;
 
-    #[ORM\ManyToOne(targetEntity:Commentaire::class, inversedBy: 'burger')]
+    #[ORM\ManyToOne(targetEntity:Burger::class, inversedBy: 'commentaire')]
     private $burger;
 
     public function getId(): ?int

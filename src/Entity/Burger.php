@@ -33,7 +33,7 @@ class Burger
     private $commentaire;
 
     #[ORM\ManyToMany(targetEntity: Oignon::class, inversedBy: 'burger')]
-    private $oignon;
+    private Collection $oignon;
 
     public function getId(): ?int
     {
@@ -82,7 +82,7 @@ class Burger
 
     public function addSauce(Sauce $sauce)
     {
-        if (!$this->sauce->contains($sauce)) {
+        if (!$this->sauce->contains($sauce)) { //s'assureq ue la sauce n'est pas déjà présente, pareil pour le commentaire
             $this->sauce[] = $sauce;
         }
         return $this;
@@ -110,7 +110,6 @@ class Burger
     public function removeCommentaire(Commentaire $commentaire): static
     {
         if ($this->commentaire->removeElement($commentaire)) {
-            // Si le commentaire appartenait à ce burger, on l'enlève aussi de l'autre côté
             if ($commentaire->getBurger() === $this) {
                 $commentaire->setBurger(null);
             }
