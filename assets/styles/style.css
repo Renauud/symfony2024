@@ -1,0 +1,22 @@
+body {
+    background-color: skyblue;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: flex-start; */
+}
+
+a{
+    color: red;
+    font-weight: bold;
+    margin-left: 50px;
+    font-size: large;
+    text-decoration: none;
+}
+
+a:hover{
+    color: white;
+}
