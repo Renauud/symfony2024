@@ -22,9 +22,21 @@ class BurgerRepository extends ServiceEntityRepository
 
     public function findBurgerWithIngredient(string $ingredientType, int $ingredientId){
 
-        $query= $this->createQueryBuilder('b')
+        $query = $this->createQueryBuilder('b')
         ->leftJoin("b." . $ingredientType, "i")
         ->where("i.id = :ingredientId")
+        ->setParameter("ingredientId", $ingredientId);
+
+        $query = $query->getQuery();
+
+        return $query->execute();
+    }
+
+    public function findBurgerWithoutIngredient(string $ingredientType, int $ingredientId){
+
+        $query = $this->createQueryBuilder('b')
+        ->leftJoin("b." . $ingredientType, "i")
+        ->where("i.id IS NULL OR i.id != :ingredientId")
         ->setParameter("ingredientId", $ingredientId);
 
         $query = $query->getQuery();
@@ -42,6 +54,20 @@ class BurgerRepository extends ServiceEntityRepository
 
         return $query->execute();
 }
+
+        //FAIRE UNE FONCTION QUI ME PERMET DE RECUPERER LE NOM AVEC L'ID POUR DE L'AFFICHAGE
+        // PROBLEME : IL FAUT ACCEDER A CAHQUE REPOSITORY DE CHAQUE INGREDIENT POSSIBLE?
+    // public function getNameFromId(int $id): ?string{
+
+    //     $query = $this->createQueryBuilder('i')
+    //     ->select('i.nom')
+    //     ->where('i.id = :id')
+    //     ->setParameter('id', $id);
+
+    //     $query = $query->getQuery();
+
+    //     return $query->getSingleScalarResult();
+    // }
 
     // public function findBurgerWithSauce(Sauce $sauce): array{
 

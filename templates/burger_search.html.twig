@@ -2,11 +2,16 @@
 {% block title %} <title> ingredients {{parent()}} </title> {% endblock %}
 {% block body %}
     {% block content %}
-        <h1>Liste des burgers avec sauce</h1>
+        <h1>Liste des burgers avec </h1> {# DOIT FAIRE EN SORTE QUE LE NOM DE L'INGREDIENT S'AFFICHE #}
         <ul>
-            {% for id, burger in burgers %}
+        {% if burgers|length > 0 %} {# vérifie que le tableau n'est pas vide, s'il l'est on indique à l'utilisateur que rien ne correspond à sa recherche #}
+            {% for id, burger in burgers %}            
                 <li><a>{{ burger.nom }}</a></li>
             {% endfor %}
+        {% else %}
+            Aucun burger ne contient cet ingrédient !
+        {% endif %}
+            
         </ul>
     {% endblock %}
 {% endblock %}

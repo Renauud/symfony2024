@@ -9,15 +9,12 @@ use App\Repository\BurgerRepository;
 use App\Repository\OignonRepository;
 use App\Repository\PainRepository;
 use App\Repository\SauceRepository;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class BurgerController extends AbstractController
 {
-
-    
     #[Route(path: '/burgers', name: 'burger')]
     public function list(BurgerRepository $burgerRepository): Response
     {
@@ -93,10 +90,47 @@ class BurgerController extends AbstractController
     }
         
     $burgers = $burgerRepository->findBurgerWithIngredient($ingredientType, $id);
+    // $nomIng = $burgerRepository->getNameFromId($id);
 
         return $this->render('burger_search.html.twig',[
-            'burgers' => $burgers
+            'burgers' => $burgers,
+            // 'nomIng' => $nomIng
         ]);
+    }
+
+    #[Route(path: '/burger/not/{id}', name: 'burger_search_exclude')]
+    public function findBurgerWithoutIngredient(int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
+        $ingredientType = null;
+        $ingredient = null;
+    
+        $ingredient = $sauceRepository->find($id);
+        if ($ingredient) {
+            $ingredientType = 'sauce';
+        }
+    
+        if (!$ingredient) {
+            $ingredient = $oignonRepository->find($id);
+            if ($ingredient) {
+                $ingredientType = 'oignon';
+            }
+        }
+    
+        if (!$ingredient) {
+            $ingredient = $painRepository->find($id);
+            if ($ingredient) {
+                $ingredientType = 'pain';
+            }
+        }
+    
+        // if (!$ingredientType) {
+        //     throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');
+        // }
+            
+        $burgers = $burgerRepository->findBurgerWithoutIngredient($ingredientType, $id);
+    
+            return $this->render('burger_search_exclude.html.twig',[
+                'burgers' => $burgers
+            ]);
     }
 
     #[Route(path: '/burger/topexpensive/{number}', name: 'burger_expensive_list')]

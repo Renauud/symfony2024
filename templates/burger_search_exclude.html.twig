@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title %} <title> ingredients {{parent()}} </title> {% endblock %}
+{% block body %}
+    {% block content %}
+        <h1>Liste des burgers sans </h1>
+        <ul>
+            {% for id, burger in burgers %}
+                <li><a>{{ burger.nom }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+{% endblock %}
