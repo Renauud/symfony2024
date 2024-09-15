@@ -6,6 +6,9 @@ use App\Entity\Oignon;
 use App\Entity\Pain;
 use App\Entity\Sauce;
 use App\Repository\BurgerRepository;
+use App\Repository\OignonRepository;
+use App\Repository\PainRepository;
+use App\Repository\SauceRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,13 +61,37 @@ class BurgerController extends AbstractController
     //         'burgers' => $ing
     //     ]);
     // }
-    #[Route(path: '/burger/has/{ingredient}', name: 'burger_search')]
-    public function findBurgerWithIngredient(Entity $ingredient, BurgerRepository $burgerRepository){
+    
+    #[Route(path: '/burger/has/{id}', name: 'burger_search')]
+    public function findBurgerWithIngredient(int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
 
-        $ing = $burgerRepository->findBurgerWithIngredient($ingredient);
+
+    $ingredientType = null;
+    $ingredient = null;
+
+    $ingredient = $sauceRepository->find($id);
+    if ($ingredient) {
+        $ingredientType = 'sauce';
+    }
+
+    if (!$ingredient) {
+        $ingredient = $oignonRepository->find($id);
+        if ($ingredient) {
+            $ingredientType = 'oignon';
+        }
+    }
+
+    if (!$ingredient) {
+        $ingredient = $painRepository->find($id);
+        if ($ingredient) {
+            $ingredientType = 'pain';
+        }
+    }
+        
+    $burgers = $burgerRepository->findBurgerWithIngredient($ingredientType, $id);
 
         return $this->render('burger_search.html.twig',[
-            'burgers' => $ing
+            'burgers' => $burgers
         ]);
     }
 }

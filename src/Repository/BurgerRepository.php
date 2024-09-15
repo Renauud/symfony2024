@@ -20,29 +20,29 @@ class BurgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Burger::class);
     }
 
-    public function findBurgerWithIngredient(Entity $ingredient){
+    public function findBurgerWithIngredient(string $ingredientType, int $ingredientId){
 
         $query= $this->createQueryBuilder('b')
-        ->leftJoin("b." . $ingredient, "i")
-        ->where("i.id = :ingredient")
-        ->setParameter("ingredient", $ingredient);
+        ->leftJoin("b." . $ingredientType, "i")
+        ->where("i.id = :ingredientId")
+        ->setParameter("ingredientId", $ingredientId);
 
         $query = $query->getQuery();
 
         return $query->execute();
     }
 
-    public function findBurgerWithSauce(Sauce $sauce): array{
+    // public function findBurgerWithSauce(Sauce $sauce): array{
 
-        $query= $this->createQueryBuilder('b')
-        ->leftJoin("b.sauce", "s")
-        ->where("s.id = :sauce")
-        ->setParameter("sauce", $sauce->getId());
+    //     $query= $this->createQueryBuilder('b')
+    //     ->leftJoin("b.sauce", "s")
+    //     ->where("s.id = :sauce")
+    //     ->setParameter("sauce", $sauce->getId());
 
-        $query = $query->getQuery();
+    //     $query = $query->getQuery();
 
-        return $query->execute();
-    }
+    //     return $query->execute();
+    // }
 
     //    /**
     //     * @return Burger[] Returns an array of Burger objects
