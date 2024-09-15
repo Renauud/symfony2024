@@ -61,7 +61,7 @@ class BurgerController extends AbstractController
     //         'burgers' => $ing
     //     ]);
     // }
-    
+
     #[Route(path: '/burger/has/{id}', name: 'burger_search')]
     public function findBurgerWithIngredient(int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
 
@@ -86,6 +86,10 @@ class BurgerController extends AbstractController
         if ($ingredient) {
             $ingredientType = 'pain';
         }
+    }
+
+    if (!$ingredientType) {
+        throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');
     }
         
     $burgers = $burgerRepository->findBurgerWithIngredient($ingredientType, $id);
