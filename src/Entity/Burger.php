@@ -18,6 +18,9 @@ class Burger
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\Column]
+    private int $price;
+
     #[ORM\ManyToOne(targetEntity: Pain::class, inversedBy: 'burger')]
     #[ORM\JoinColumn(nullable: false)]
     private $pain;
@@ -56,6 +59,18 @@ class Burger
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -32,6 +32,27 @@ class BurgerRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findTopXMostExpensiveBurger(int $limit){
+
+        $query = $this->createQueryBuilder('b')
+        ->orderBy('b.price', 'DESC')
+        ->setMaxResults($limit);
+
+        $query = $query->getQuery();
+
+        return $query->execute();
+}
+
+    public function getBurgerQtty(){
+
+        $query = $this->createQueryBuilder('b')
+        ->orderBy('b.price', 'DESC');
+
+        $query = $query->getQuery();
+
+        return $query->execute();
+    }
+
     // public function findBurgerWithSauce(Sauce $sauce): array{
 
     //     $query= $this->createQueryBuilder('b')

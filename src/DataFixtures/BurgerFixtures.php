@@ -62,6 +62,7 @@ class BurgerFixtures extends Fixture implements DependentFixtureInterface
         $burgerSuperbe->addOignon($oignonsCaramelises);
         $burgerSuperbe->addOignon($oignonsCaramelises);
         $burgerSuperbe->setImage($imageBurger1);
+        $burgerSuperbe->setPrice(13);
         $burgerSuperbe->addCommentaire($commentaire1);
         $burgerSuperbe->addCommentaire($commentaire2);
         $burgerSuperbe->addCommentaire($commentaire3);
@@ -73,6 +74,7 @@ class BurgerFixtures extends Fixture implements DependentFixtureInterface
         $burgerMid->addOignon($oignonsJaunes);
         $burgerMid->addSauce($sauceMayonnaise);
         $burgerMid->setImage($imageBurger2);
+        $burgerMid->setPrice(10);
         $burgerMid->addCommentaire($commentaire6);
         
         //Pire Burger
@@ -81,6 +83,7 @@ class BurgerFixtures extends Fixture implements DependentFixtureInterface
         $burgerNul->setPain($painBurgerClassique);
         $burgerNul->addSauce($sauceKetchup);
         $burgerNul->setImage($imageBurger3);
+        $burgerNul->setPrice(7);
         $burgerNul->addCommentaire($commentaire4);
         $burgerNul->addCommentaire($commentaire5);
 

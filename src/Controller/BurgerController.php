@@ -98,4 +98,19 @@ class BurgerController extends AbstractController
             'burgers' => $burgers
         ]);
     }
+
+    #[Route(path: '/burger/topexpensive/{number}', name: 'burger_expensive_list')]
+    public function listTopXMostExpensiveBurger(int $number, BurgerRepository $burgerRepository){
+
+        $burger_list = $burgerRepository->findTopXMostExpensiveBurger($number);
+        // burger_qtty me sert pour l'affichage, si on renseigne un nombre plus important
+        // que le nb de burger présent dans la bdd ça reviendra à afficher le nb max présent dans la bdd
+        // ça évitera d'afficher "top 50 burgers" alors qu'il n'y en a en réalité que 47 etc etc, l'url ne se modifie cependant pas (pas encore?)
+        $burger_qtty = Count($burger_list); 
+
+        return $this->render('burger_expensive_list.html.twig', [
+            'burgers' => $burger_list,
+            'burger_qtty' => $burger_qtty
+        ]);
+    }
 }
