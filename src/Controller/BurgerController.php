@@ -9,6 +9,8 @@ use App\Repository\BurgerRepository;
 use App\Repository\OignonRepository;
 use App\Repository\PainRepository;
 use App\Repository\SauceRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -49,78 +51,42 @@ class BurgerController extends AbstractController
         ]);
     }
 
-    // #[Route(path: '/burger/has/{sauce}', name: 'burger_search')]
-    // public function findBurgerWithSauce(Sauce $sauce, BurgerRepository $burgerRepository){
+    #[Route(path: '/burger/has/{ingredientType}/{id}', name: 'burger_search')]
+    public function findBurgerWithIngredient(string $ingredientType, int $id, EntityManagerInterface $entityManager, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
 
-    //     $ing = $burgerRepository->findBurgerWithSauce($sauce);
-
-    //     return $this->render('burger_search.html.twig',[
-    //         'burgers' => $ing
-    //     ]);
-    // }
-
-    #[Route(path: '/burger/has/{id}', name: 'burger_search')]
-    public function findBurgerWithIngredient(int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
-
-
-    $ingredientType = null;
-    $ingredient = null;
-
-    $ingredient = $sauceRepository->find($id);
-    if ($ingredient) {
-        $ingredientType = 'sauce';
-    }
-
-    if (!$ingredient) {
-        $ingredient = $oignonRepository->find($id);
-        if ($ingredient) {
-            $ingredientType = 'oignon';
+        switch($ingredientType){
+            case "sauce":
+                $ingRepo = $entityManager->getRepository(Sauce::class);
+                break;
+            case "oignon":
+                $ingRepo = $entityManager->getRepository(Oignon::class);
+                break;
+            case "pain": 
+                $ingRepo = $entityManager->getRepository(Pain::class);
+                break;   
         }
-    }
 
-    if (!$ingredient) {
-        $ingredient = $painRepository->find($id);
-        if ($ingredient) {
-            $ingredientType = 'pain';
-        }
-    }
-
-    if (!$ingredientType) {
-        throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');
-    }
+        $ingredient = $ingRepo->findOneBy(["id" => $id]); // [0] récupère le premier (et seul) ingrédient du tableau
         
-    $burgers = $burgerRepository->findBurgerWithIngredient($ingredientType, $id);
-    // $nomIng = $burgerRepository->getNameFromId($id);
 
+        // $ingName = $burgerRepository->getNameFromId($ingRepo, $id, $ingredientType);
+        
+        if (!$ingredientType) {
+            throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');
+        }
+
+        $burgers = $burgerRepository->findBurgerWithIngredient($ingredient);
+        
         return $this->render('burger_search.html.twig',[
             'burgers' => $burgers,
-            // 'nomIng' => $nomIng
+            'id' => $id,
+            'ingredientType' => $ingredientType,
+            // 'ingredient' =>$ingredient
         ]);
     }
 
-    #[Route(path: '/burger/not/{id}', name: 'burger_search_exclude')]
-    public function findBurgerWithoutIngredient(int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
-        $ingredientType = null;
-        $ingredient = null;
-    
-        $ingredient = $sauceRepository->find($id);
-        if ($ingredient) {
-            $ingredientType = 'sauce';
-        }
-    
-        if (!$ingredient) {
-            $ingredient = $oignonRepository->find($id);
-            if ($ingredient) {
-                $ingredientType = 'oignon';
-            }
-        }
-    
-        if (!$ingredient) {
-            $ingredient = $painRepository->find($id);
-            if ($ingredient) {
-                $ingredientType = 'pain';
-            }
-        }
+    #[Route(path: '/burger/not/{ingredientType}/{id}', name: 'burger_search_exclude')]
+    public function findBurgerWithoutIngredient(string $ingredientType, int $id, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
     
         // if (!$ingredientType) {
         //     throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');

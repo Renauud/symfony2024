@@ -7,7 +7,7 @@ use App\Entity\Oignon;
 use App\Entity\Pain;
 use App\Entity\Sauce;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,12 +20,24 @@ class BurgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Burger::class);
     }
 
-    public function findBurgerWithIngredient(string $ingredientType, int $ingredientId){
+    public function findBurgerWithIngredient(Pain | Oignon | Sauce $ingredient){
 
-        $query = $this->createQueryBuilder('b')
-        ->leftJoin("b." . $ingredientType, "i")
-        ->where("i.id = :ingredientId")
-        ->setParameter("ingredientId", $ingredientId);
+        $ingredientType = get_class($ingredient);
+
+        $query = $this->createQueryBuilder('b');
+        if($ingredientType == "App/Entity/Sauce"){
+            $query->leftJoin("b.sauce", "s")
+            ->where("s.id = :ingredientId")
+            ->setParameter("ingredientId", $ingredient); // à changer
+        }elseif($ingredientType == "App/Entity/Pain"){
+            $query->leftJoin("b.pain", "p")
+            ->where("p.id = :ingredientId")
+            ->setParameter("ingredientId", $ingredient);
+        }else{
+            $query->leftJoin("b.oignon", "o")
+            ->where("o.id = :ingredientId")
+            ->setParameter("ingredientId", $ingredient);
+        }
 
         $query = $query->getQuery();
 
@@ -34,14 +46,20 @@ class BurgerRepository extends ServiceEntityRepository
 
     public function findBurgerWithoutIngredient(string $ingredientType, int $ingredientId){
 
+        //pb qd le burger contient plusieurs sauces
         $query = $this->createQueryBuilder('b')
         ->leftJoin("b." . $ingredientType, "i")
-        ->where("i.id IS NULL OR i.id != :ingredientId")
+        ->where("b.id NOT IN (
+                SELECT b2.id
+                FROM App\Entity\Burger b2
+                JOIN b2." . $ingredientType . " i2
+                WHERE i2.id = :ingredientId)
+                ")
         ->setParameter("ingredientId", $ingredientId);
 
         $query = $query->getQuery();
 
-        return $query->execute();
+        return $query->getResult();
     }
 
     public function findTopXMostExpensiveBurger(int $limit){
@@ -53,7 +71,19 @@ class BurgerRepository extends ServiceEntityRepository
         $query = $query->getQuery();
 
         return $query->execute();
-}
+    }
+
+    // public function getNameFromId(){
+        
+    //     $query = $entityManager->createQueryBuilder("")
+    //     ->select($name . ".nom")
+    //     ->where($name . ".id = :id")
+    //     ->setParameter("id", $id);
+
+    //     $query = $query->getQuery();
+
+    //     return $query->getSingleScalarResult();
+    // }
 
         //FAIRE UNE FONCTION QUI ME PERMET DE RECUPERER LE NOM AVEC L'ID POUR DE L'AFFICHAGE
         // PROBLEME : IL FAUT ACCEDER A CAHQUE REPOSITORY DE CHAQUE INGREDIENT POSSIBLE?
@@ -67,18 +97,6 @@ class BurgerRepository extends ServiceEntityRepository
     //     $query = $query->getQuery();
 
     //     return $query->getSingleScalarResult();
-    // }
-
-    // public function findBurgerWithSauce(Sauce $sauce): array{
-
-    //     $query= $this->createQueryBuilder('b')
-    //     ->leftJoin("b.sauce", "s")
-    //     ->where("s.id = :sauce")
-    //     ->setParameter("sauce", $sauce->getId());
-
-    //     $query = $query->getQuery();
-
-    //     return $query->execute();
     // }
 
     //    /**
