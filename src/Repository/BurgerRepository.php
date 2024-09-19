@@ -25,18 +25,18 @@ class BurgerRepository extends ServiceEntityRepository
         $ingredientType = get_class($ingredient);
 
         $query = $this->createQueryBuilder('b');
-        if($ingredientType == "App/Entity/Sauce"){
+        if($ingredientType == "App\Entity\Sauce"){
             $query->leftJoin("b.sauce", "s")
             ->where("s.id = :ingredientId")
-            ->setParameter("ingredientId", $ingredient); // à changer
-        }elseif($ingredientType == "App/Entity/Pain"){
+            ->setParameter("ingredientId",$ingredient->getId());
+        }elseif($ingredientType == "App\Entity\Pain"){
             $query->leftJoin("b.pain", "p")
             ->where("p.id = :ingredientId")
-            ->setParameter("ingredientId", $ingredient);
+            ->setParameter("ingredientId",$ingredient->getId());
         }else{
             $query->leftJoin("b.oignon", "o")
             ->where("o.id = :ingredientId")
-            ->setParameter("ingredientId", $ingredient);
+            ->setParameter("ingredientId",$ingredient->getId());
         }
 
         $query = $query->getQuery();

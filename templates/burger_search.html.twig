@@ -2,7 +2,7 @@
 {% block title %} <title> ingredients {{parent()}} </title> {% endblock %}
 {% block body %}
     {% block content %}
-        <h1>Liste des burgers avec {{ingredientType}} {{id}} </h1> {# DOIT FAIRE EN SORTE QUE LE NOM DE L'INGREDIENT S'AFFICHE #}
+        <h1>Liste des burgers avec l'ingrédient {{ingredientType}} {{ ingNom}}</h1> {# DOIT FAIRE EN SORTE QUE LE NOM DE L'INGREDIENT S'AFFICHE #}
         <ul>
         {% if burgers|length > 0 %} {# vérifie que le tableau n'est pas vide, s'il l'est on indique à l'utilisateur que rien ne correspond à sa recherche #}
             {% for id, burger in burgers %}            

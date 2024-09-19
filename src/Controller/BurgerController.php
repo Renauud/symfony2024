@@ -66,11 +66,9 @@ class BurgerController extends AbstractController
                 break;   
         }
 
-        $ingredient = $ingRepo->findOneBy(["id" => $id]); // [0] récupère le premier (et seul) ingrédient du tableau
-        
+        $ingredient = $ingRepo->findOneBy(["id" => $id]);
+        $ingNom = $ingredient->getNom();
 
-        // $ingName = $burgerRepository->getNameFromId($ingRepo, $id, $ingredientType);
-        
         if (!$ingredientType) {
             throw $this->createNotFoundException('Ingrédient non trouvé. Veuillez saisir un ingrédient valide!');
         }
@@ -81,7 +79,7 @@ class BurgerController extends AbstractController
             'burgers' => $burgers,
             'id' => $id,
             'ingredientType' => $ingredientType,
-            // 'ingredient' =>$ingredient
+            'ingNom' =>$ingNom
         ]);
     }
 
