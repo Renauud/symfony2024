@@ -73,6 +73,22 @@ class BurgerRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findBurgersWithMinimumIngredients(int $minIngredients){
+
+        $query = $this->createQueryBuilder("b")
+        ->leftJoin('b.sauce', 's')
+        ->leftJoin('b.oignon', 'o')
+        ->leftJoin('b.pain', 'p')
+        ->groupBy('b.id')
+        ->having('(COUNT(s) + COUNT(o) + COUNT(p)) >= :minIngredients')
+        ->setParameter('minIngredients', $minIngredients);
+
+        $query = $query->getQuery();
+
+       return $query->execute();
+}
+
+
     // public function getNameFromId(){
         
     //     $query = $entityManager->createQueryBuilder("")

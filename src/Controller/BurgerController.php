@@ -52,21 +52,12 @@ class BurgerController extends AbstractController
     }
 
     #[Route(path: '/burger/has/{ingredientType}/{id}', name: 'burger_search')]
-    public function findBurgerWithIngredient(string $ingredientType, int $id, EntityManagerInterface $entityManager, BurgerRepository $burgerRepository, SauceRepository $sauceRepository, OignonRepository $oignonRepository, PainRepository $painRepository){
+    public function findBurgerWithIngredient(string $ingredientType, int $id, EntityManagerInterface $entityManager, BurgerRepository $burgerRepository){
 
-        switch($ingredientType){
-            case "sauce":
-                $ingRepo = $entityManager->getRepository(Sauce::class);
-                break;
-            case "oignon":
-                $ingRepo = $entityManager->getRepository(Oignon::class);
-                break;
-            case "pain": 
-                $ingRepo = $entityManager->getRepository(Pain::class);
-                break;   
-        }
+        $ingRepo = $this->getOneIngredientRepo($ingredientType, $entityManager);
 
         $ingredient = $ingRepo->findOneBy(["id" => $id]);
+
         $ingNom = $ingredient->getNom();
 
         if (!$ingredientType) {
@@ -77,7 +68,7 @@ class BurgerController extends AbstractController
         
         return $this->render('burger_search.html.twig',[
             'burgers' => $burgers,
-            'id' => $id,
+            // 'id' => $id,
             'ingredientType' => $ingredientType,
             'ingNom' =>$ingNom
         ]);
@@ -110,5 +101,40 @@ class BurgerController extends AbstractController
             'burgers' => $burger_list,
             'burger_qtty' => $burger_qtty
         ]);
+    }
+    #[Route(path: '/burger/min/{minNumber}', name: 'burger_min_ingredients')]
+    public function findBurgersWithMinimumIngredients(int $minNumber, BurgerRepository $burgerRepository, EntityManagerInterface $entityManager){
+
+        // $sauceRepo = $entityManager->getRepository(Sauce::class);
+        // $oignonRepo = $entityManager->getRepository(Oignon::class);
+        // $painRepo = $entityManager->getRepository(Pain::class);
+
+
+
+        $burgers = $burgerRepository->findBurgersWithMinimumIngredients($minNumber);
+
+        return $this->render('burger_min_ingredients.html.twig', [
+            'burgers' => $burgers,
+            'numMin' => $minNumber
+        ]);
+
+    }
+
+    public function getOneIngredientRepo(string $ingredientType, EntityManagerInterface $entityManager): object{
+
+        switch($ingredientType){
+            case "sauce":
+                $ingRepo = $entityManager->getRepository(Sauce::class);
+                break;
+            case "oignon":
+                $ingRepo = $entityManager->getRepository(Oignon::class);
+                break;
+            case "pain": 
+                $ingRepo = $entityManager->getRepository(Pain::class);
+                break;   
+        }
+
+        return $ingRepo;
+
     }
 }
