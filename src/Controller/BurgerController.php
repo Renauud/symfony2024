@@ -108,11 +108,6 @@ class BurgerController extends AbstractController
     #[Route(path: '/burger/min/{minNumber}', name: 'burger_min_ingredients')]
     public function findBurgersWithMinimumIngredients(int $minNumber, BurgerRepository $burgerRepository, EntityManagerInterface $entityManager){
 
-        // $sauceRepo = $entityManager->getRepository(Sauce::class);
-        // $oignonRepo = $entityManager->getRepository(Oignon::class);
-        // $painRepo = $entityManager->getRepository(Pain::class);
-
-
 
         $burgers = $burgerRepository->findBurgersWithMinimumIngredients($minNumber);
 
@@ -124,18 +119,23 @@ class BurgerController extends AbstractController
     }
 
 
-    #[Route('/burger/add/burger', name:"creation", methods: ['GET', "POST"])]
-    public function creation(Request $request, EntityManagerInterface $em){
+    #[Route('/burger/add/burger', name:"ajout_burger", methods: ['GET', "POST"])]
+    public function creation(Request $request, EntityManagerInterface $em): Response{
 
         $burger = new Burger();
         $form = $this->createForm(BurgerType::class, $burger);
+
         $form->handleRequest($request);
+        
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($burger);
             $em->flush();
+
+            $this->addFlash('success', 'Burger créé !');
+            return $this->redirectToRoute('burger_details');
         }
 
-        return $this->render('ajout_burger_html.twig',[
+        return $this->render('ajout_burger.html.twig',[
             'burger' => $burger,
             'form' => $form
         ]);

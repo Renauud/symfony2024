@@ -16,7 +16,7 @@ class Sauce
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity:Sauce::class, mappedBy: 'sauce')]
+    #[ORM\ManyToMany(targetEntity:Burger::class, mappedBy: 'sauce')]
     private $burger;
 
     public function getId(): ?int

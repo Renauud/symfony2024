@@ -9,6 +9,8 @@ use App\Entity\Pain;
 use App\Entity\Sauce;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,7 +25,7 @@ class BurgerType extends AbstractType
                 'class' => Pain::class,
                 'choice_label' => 'id',
             ])
-            ->add('sauce', EntityType::class, [
+            ->add('sauces', EntityType::class, [
                 'class' => Sauce::class,
                 'choice_label' => 'id',
                 'multiple' => true,
@@ -32,11 +34,17 @@ class BurgerType extends AbstractType
                 'class' => Image::class,
                 'choice_label' => 'id',
             ])
-            ->add('oignon', EntityType::class, [
+            ->add('oignons', EntityType::class, [
                 'class' => Oignon::class,
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom du burger'
+            ])
+            ->add('save', SubmitType::class,[
+                'attr' => ['class' => 'save']
+            ] )
         ;
     }
 
