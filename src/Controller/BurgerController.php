@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Burger;
 use App\Entity\Oignon;
 use App\Entity\Pain;
 use App\Entity\Sauce;
+use App\Form\BurgerType;
 use App\Repository\BurgerRepository;
 use App\Repository\OignonRepository;
 use App\Repository\PainRepository;
@@ -12,6 +14,7 @@ use App\Repository\SauceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -118,6 +121,24 @@ class BurgerController extends AbstractController
             'numMin' => $minNumber
         ]);
 
+    }
+
+
+    #[Route('/burger/add/burger', name:"creation", methods: ['GET', "POST"])]
+    public function creation(Request $request, EntityManagerInterface $em){
+
+        $burger = new Burger();
+        $form = $this->createForm(BurgerType::class, $burger);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($burger);
+            $em->flush();
+        }
+
+        return $this->render('ajout_burger_html.twig',[
+            'burger' => $burger,
+            'form' => $form
+        ]);
     }
 
     public function getOneIngredientRepo(string $ingredientType, EntityManagerInterface $entityManager): object{
