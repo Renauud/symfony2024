@@ -78,9 +78,8 @@ class BurgerRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder("b")
         ->leftJoin('b.sauce', 's')
         ->leftJoin('b.oignon', 'o')
-        ->leftJoin('b.pain', 'p')
         ->groupBy('b.id')
-        ->having('(COUNT(s) + COUNT(o) + COUNT(p)) >= :minIngredients')
+        ->having('(COUNT(s) + COUNT(o))+1 >= :minIngredients') // le +1 est lié au pain, qui est toujours présent 
         ->setParameter('minIngredients', $minIngredients);
 
         $query = $query->getQuery();
