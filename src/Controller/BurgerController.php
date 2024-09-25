@@ -71,7 +71,6 @@ class BurgerController extends AbstractController
         
         return $this->render('burger_search.html.twig',[
             'burgers' => $burgers,
-            // 'id' => $id,
             'ingredientType' => $ingredientType,
             'ingNom' =>$ingNom
         ]);
@@ -105,6 +104,7 @@ class BurgerController extends AbstractController
             'burger_qtty' => $burger_qtty
         ]);
     }
+
     #[Route(path: '/burger/min/{minNumber}', name: 'burger_min_ingredients')]
     public function findBurgersWithMinimumIngredients(int $minNumber, BurgerRepository $burgerRepository, EntityManagerInterface $entityManager){
 
@@ -136,7 +136,6 @@ class BurgerController extends AbstractController
         }
 
         return $this->render('ajout_burger.html.twig',[
-            'burger' => $burger,
             'form' => $form
         ]);
     }

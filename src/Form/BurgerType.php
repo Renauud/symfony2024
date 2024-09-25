@@ -23,11 +23,11 @@ class BurgerType extends AbstractType
             ->add('price')
             ->add('pain', EntityType::class, [
                 'class' => Pain::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('sauces', EntityType::class, [
                 'class' => Sauce::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
                 'multiple' => true,
             ])
             ->add('image', EntityType::class, [
@@ -36,7 +36,7 @@ class BurgerType extends AbstractType
             ])
             ->add('oignons', EntityType::class, [
                 'class' => Oignon::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
                 'multiple' => true,
             ])
             ->add('nom', TextType::class, [
