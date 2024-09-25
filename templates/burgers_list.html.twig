@@ -3,10 +3,13 @@
 {% block body %}
     {% block content %}
         <h1>Liste des burgers</h1>
-        <ul>
-            {% for id, burger in burgers %}
-                <li><a href="{{ path('burger_details', {id: id}) }}">{{ burger }}</a></li>
+            {% for burger in burgers %}
+            <div>
+                <a>
+                <p><img></p>
+                {{ burger.nom }}
+                </a>
+            </div>
             {% endfor %}
-        </ul>
     {% endblock %}
 {% endblock %}

@@ -20,6 +20,16 @@ class BurgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Burger::class);
     }
 
+    public function listBurgerNames(){
+
+        $query = $this->createQueryBuilder("b") // requête pour l'affichage des burgers à la route "/burgers"
+        ->select('b.nom, b.price, b.image');
+
+        $query = $query->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findBurgerWithIngredient(Pain | Oignon | Sauce $ingredient){
 
         $ingredientType = get_class($ingredient);
@@ -85,7 +95,12 @@ class BurgerRepository extends ServiceEntityRepository
         $query = $query->getQuery();
 
        return $query->execute();
-}
+    }
+
+    public function imagesNotLinked(){
+
+        $query = $this->createQueryBuilder("");
+    }
 
 
     // public function getNameFromId(){

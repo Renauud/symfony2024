@@ -2,6 +2,29 @@
 {% block title %}<title>Ajout Burger | {{ parent() }} </title>{% endblock %}
 {% block body %}
     {% block content %}
-        {{ form(form) }}
+    <h1>Créer un nouveau Burger</h1>
+
+    {{ form_start(form) }}
+
+        <div class="mb-3">
+            <label for="nom" class="form-label">{{ form_label(form.nom) }}</label>
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+
+        <div class="mb-3">
+            <label for="price">{{ form_label(form.price) }}</label>
+            {{ form_widget(form.price, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_errors(form.price) }}
+        </div>
+
+        <div class="mb-3">
+            <label for="pain">{{ form_label(form.pain) }}</label>
+            {{ form_widget(form.pain, {'attr': {'class': 'btn dropdown-toggle border border-danger-subtle w-25'}}) }}
+            {{ form_errors(form.pain) }}
+        </div>
+
+        
+    {{ form_end(form) }}
     {% endblock %}
 {% endblock %}

@@ -19,7 +19,7 @@ class BurgerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            // ->add('nom')
             ->add('price')
             ->add('pain', EntityType::class, [
                 'class' => Pain::class,

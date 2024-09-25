@@ -21,15 +21,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class BurgerController extends AbstractController
 {
     #[Route(path: '/burgers', name: 'burger')]
-    public function list(BurgerRepository $burgerRepository): Response
+    public function listBurgerNames(BurgerRepository $burgerRepository): Response
     {
-        $listBurger = [
-            1=>"burger1",
-            2=>"burger2",
-            3=>"burger3",
-        ];
-        
-        //   $burgers = burgerRepository->findAll();
+        $listBurger = $burgerRepository->listBurgerNames();
         
         return $this->render('burgers_list.html.twig',[
             'burgers' => $listBurger

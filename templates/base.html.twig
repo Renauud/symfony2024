@@ -15,9 +15,11 @@
         {% endblock %}
 
     </head>
-    <body>
+    <body class="">
         {% include '_header.html.twig' %}
+        <div class="bg-dark-subtle">
         {% block content %}{% endblock %}
+        </div>
         {% include '_footer.html.twig' %}
     </body>
 </html>
