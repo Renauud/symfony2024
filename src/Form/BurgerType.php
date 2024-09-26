@@ -33,7 +33,7 @@ class BurgerType extends AbstractType
             'expanded' => false,
             'required' => true,
         ])
-        ->add('oignon', EntityType::class, [
+        ->add('oignons', EntityType::class, [
             'label' => 'Oignon',
             'class' => Oignon::class,
             'choice_label' => 'nom',
@@ -53,8 +53,7 @@ class BurgerType extends AbstractType
         ])
         ->add('image', EntityType::class, [
             'class' => Image::class,
-            'choice_label' => 'nom', 
-            'attr' => ['data-image-preview-target' => 'select', 'data-action' => 'change->image-preview#preview'],
+            'choice_label' => 'alt_text', 
         ])
         ;
     }
