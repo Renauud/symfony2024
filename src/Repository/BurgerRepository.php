@@ -23,7 +23,8 @@ class BurgerRepository extends ServiceEntityRepository
     public function listBurgerNames(){
 
         $query = $this->createQueryBuilder("b") // requête pour l'affichage des burgers à la route "/burgers"
-        ->select('b.nom, b.price, b.image');
+        ->select('b.nom, b.price, i.id AS imgId')
+        ->leftJoin('b.image', 'i');
 
         $query = $query->getQuery();
 
