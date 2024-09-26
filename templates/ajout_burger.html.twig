@@ -4,27 +4,20 @@
     {% block content %}
     <h1>Créer un nouveau Burger</h1>
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-        <div class="mb-3">
-            <label for="nom" class="form-label">{{ form_label(form.nom) }}</label>
-            {{ form_widget(form.nom, {'attr': {'class': 'form-control w-25'}}) }}
-            {{ form_errors(form.nom) }}
-        </div>
+            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.price, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.pain, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.oignon, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.image, {'attr': {'class': 'form-control'}}) }}
 
-        <div class="mb-3">
-            <label for="price">{{ form_label(form.price) }}</label>
-            {{ form_widget(form.price, {'attr': {'class': 'form-control w-25'}}) }}
-            {{ form_errors(form.price) }}
-        </div>
+            <div data-controller="sauce">
+                {{ form_row(form.sauces, {'attr': {'class': 'form-control', 'data-action': 'change->sauce#selectSauce'}}) }}
+            </div>
 
-        <div class="mb-3">
-            <label for="pain">{{ form_label(form.pain) }}</label>
-            {{ form_widget(form.pain, {'attr': {'class': 'btn dropdown-toggle border border-danger-subtle w-25'}}) }}
-            {{ form_errors(form.pain) }}
-        </div>
+            <button type="submit" class="form-control w-auto">Créer</button>
 
-        
-    {{ form_end(form) }}
+		{{ form_end(form) }}
     {% endblock %}
 {% endblock %}

@@ -16,7 +16,7 @@ class Oignon
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: Burger::class, inversedBy: Oignon::class)]
+    #[ORM\OneToMany(targetEntity:Oignon::class, mappedBy: 'oignon')]
     private $burger;
 
     public function getId(): ?int

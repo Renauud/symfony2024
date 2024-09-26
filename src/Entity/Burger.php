@@ -36,14 +36,13 @@ class Burger
     #[ORM\JoinColumn(nullable :false)]
     private $commentaire;
 
-    #[ORM\ManyToMany(targetEntity: Oignon::class, inversedBy: 'burger')]
-    private Collection $oignon;
+    #[ORM\ManyToOne(targetEntity: Oignon::class, inversedBy: 'burger')]
+    private $oignon;
 
     public function __construct()
     {
         $this->sauce = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
-        $this->oignon = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,24 +140,22 @@ class Burger
         return $this;
     }
 
-    public function getOignons(): Collection
+    public function getOignons()
     {
         return $this->oignon;
     }
 
     public function addOignon(Oignon $oignon): static
     {
-        if (!$this->oignon->contains($oignon)) {
-            $this->oignon[] = $oignon;
-        }
+            $this->oignon = $oignon;
 
         return $this;
     }
 
-    public function removeOignon(Oignon $oignon): static
-    {
-        $this->oignon->removeElement($oignon);
+    // public function removeOignon(Oignon $oignon): static
+    // {
+    //     $this->oignon->removeElement($oignon);
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
