@@ -33,14 +33,14 @@ class BurgerType extends AbstractType
             'expanded' => false,
             'required' => true,
         ])
-        ->add('oignons', EntityType::class, [
+        ->add('oignon', EntityType::class, [
             'label' => 'Oignon',
             'class' => Oignon::class,
             'choice_label' => 'nom',
             'multiple' => false,
             'expanded' => false,
             'required' => true,
-            'by_reference' => false
+            // 'by_reference' => false
         ])
         ->add('sauces', EntityType::class, [
             'label' => 'Sauce',

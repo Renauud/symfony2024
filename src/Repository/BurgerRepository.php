@@ -20,7 +20,7 @@ class BurgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Burger::class);
     }
 
-    public function listBurgerNames(){
+    public function listBurgers(){
 
         $query = $this->createQueryBuilder("b") // requête pour l'affichage des burgers à la route "/burgers"
         ->select('b.nom, b.price, i.id AS imgId')
@@ -29,6 +29,22 @@ class BurgerRepository extends ServiceEntityRepository
         $query = $query->getQuery();
 
         return $query->getResult();
+    }
+
+    public function findBurgerById(int $id){
+
+        $query = $this->createQueryBuilder('b')
+        ->leftJoin('b.sauce', 's')
+        ->leftJoin('b.oignon', 'o')
+        ->leftJoin('b.image', 'i')
+        ->where('b.id = :id')
+        ->setParameter('id', $id);
+
+        $query = $query->getQuery();
+
+        // dd($query->getOneOrNullResult());
+
+        return $query->getOneOrNullResult();
     }
 
     public function findBurgerWithIngredient(Pain | Oignon | Sauce $ingredient){

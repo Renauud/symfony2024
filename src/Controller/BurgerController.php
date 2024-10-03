@@ -23,7 +23,7 @@ class BurgerController extends AbstractController
     #[Route(path: '/burgers', name: 'burger')]
     public function listBurgerNames(BurgerRepository $burgerRepository): Response
     {
-        $listBurger = $burgerRepository->listBurgerNames();
+        $listBurger = $burgerRepository->listBurgers();
         
         return $this->render('burgers_list.html.twig',[
             'burgers' => $listBurger
@@ -31,20 +31,14 @@ class BurgerController extends AbstractController
     }
     
     #[Route('/burger/{id}', name: 'burger_details')]
-    public function show(int $id){
+    public function show(int $id, BurgerRepository $burgerRepository){
 
-        $listBurger = [
-            1=>"burger1",
-            2=>"burger2",
-            3=>"burger3",
-        ];
+        $burger = $burgerRepository->findBurgerById($id);
 
-        $burger = $listBurger[$id];
-
-        return $this->render('burger_detail.html.twig',
+        return $this->render('burger_details.html.twig',
         [
-            'id' => $id,
-            'nomBurger' => $burger
+            // 'id' => $id,
+            'burger' => $burger,
         ]);
     }
 

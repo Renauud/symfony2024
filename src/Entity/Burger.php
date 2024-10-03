@@ -37,7 +37,7 @@ class Burger
     private $commentaire;
 
     #[ORM\ManyToOne(targetEntity: Oignon::class, inversedBy: 'burger')]
-    private $oignon;
+    private Oignon $oignon;
 
     public function __construct()
     {
@@ -140,22 +140,21 @@ class Burger
         return $this;
     }
 
-    public function getOignons()
+    public function getOignon(): ?Oignon
     {
         return $this->oignon;
     }
 
-    public function addOignon(Oignon $oignon): static
+    public function setOignon(Oignon $oignon): static
     {
-            $this->oignon = $oignon;
-
+        $this->oignon = $oignon;
         return $this;
     }
 
-    // public function removeOignon(Oignon $oignon): static
-    // {
-    //     $this->oignon->removeElement($oignon);
+     public function removeOignon(Oignon $oignon): static
+     {
+        $this->$oignon = null;
 
-    //     return $this;
-    // }
+        return $this;
+     }
 }

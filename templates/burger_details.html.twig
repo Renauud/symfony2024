@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %} <title>Détail du Burger {{ burger.id }} {{parent()}} </title> {% endblock %}
+{% block body %}
+    {% block content %}
+        <h1>Nom du burger : {{ burger.nom }} </h1>
+        <p>burger prix : {{burger.price}}€ </p>
+        <p>burger oignon : {{burger.oignon.nom}} </p>
+        <p>burger sauce :
+        {% for sauce in burger.sauces %}
+            {{sauce.nom}} 
+        {% endfor %}
+        </p>
+    {% endblock %}
+{% endblock %}
