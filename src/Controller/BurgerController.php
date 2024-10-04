@@ -120,7 +120,7 @@ class BurgerController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Burger créé !');
-            return $this->redirectToRoute('burger_details');
+            return $this->redirectToRoute('burger_details',['id'=> $burger->getId()]);
         }
 
         return $this->render('ajout_burger.html.twig',[
