@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Entity\Oignon;
 use App\Entity\Pain;
 use App\Entity\Sauce;
+use App\Repository\ImageRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -16,6 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BurgerType extends AbstractType
 {
+
+    public function __construct(private ImageRepository $imageRepository){}
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -53,7 +57,8 @@ class BurgerType extends AbstractType
         ])
         ->add('image', EntityType::class, [
             'class' => Image::class,
-            'choice_label' => 'alt_text', 
+            'choice_label' => 'alt_text',
+            'choices' => $this->imageRepository->imagesNotUsed(),
         ])
         ;
     }

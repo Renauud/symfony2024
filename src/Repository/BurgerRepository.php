@@ -7,6 +7,7 @@ use App\Entity\Oignon;
 use App\Entity\Pain;
 use App\Entity\Sauce;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -112,11 +113,6 @@ class BurgerRepository extends ServiceEntityRepository
         $query = $query->getQuery();
 
        return $query->execute();
-    }
-
-    public function imagesNotLinked(){
-
-        $query = $this->createQueryBuilder("");
     }
 
 

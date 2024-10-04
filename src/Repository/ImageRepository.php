@@ -15,4 +15,19 @@ class ImageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Image::class);
     }
+
+    
+    public function imagesNotUsed(){
+
+        $query = $this->createQueryBuilder("i")
+        ->leftJoin('App\Entity\Burger', 'b', 'WITH', 'b.image = i.id')
+        ->where('b.id IS NULL'
+        );
+
+
+
+        $query= $query->getQuery();
+
+        return $query->execute();
+    }
 }

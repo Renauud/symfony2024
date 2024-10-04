@@ -6,21 +6,21 @@
             <h1>Créer un nouveau Burger</h1>
         </div>
 
-            {{ form_start(form) }}
+        {{ form_start(form) }}
 
-                {{ form_row(form.nom, {'attr': {'class': 'form-control w-25'}}) }}
-                {{ form_row(form.price, {'attr': {'class': 'form-control w-25'}}) }}
-                {{ form_row(form.pain, {'attr': {'class': 'form-control w-25'}}) }}
-                {{ form_row(form.oignon, {'attr': {'class': 'form-control w-25'}}) }}
-                {{ form_row(form.image, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_row(form.nom, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_row(form.price, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_row(form.pain, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_row(form.oignon, {'attr': {'class': 'form-control w-25'}}) }}
+            {{ form_row(form.image, {'attr': {'class': 'form-control w-25'}}) }}
 
-                <div data-controller="sauce">
-                    {{ form_row(form.sauces, {'attr': {'class': 'form-control d-flex flex-column w-25'}}) }}
-                </div>
-                <div class="mx-auto col-2">
-                    <button type="submit" class="form-control">Créer le Burger</button>
-                </div>
+            <div data-controller="sauce">
+                {{ form_row(form.sauces, {'attr': {'class': 'form-control d-flex flex-column w-25'}}) }}
+            </div>
+            <div class="mx-auto col-2">
+                <button type="submit" class="form-control">Créer le Burger</button>
+            </div>
 
-                {{ form_end(form) }}
+        {{ form_end(form) }}
     {% endblock %}
 {% endblock %}
