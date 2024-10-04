@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}<title>Ajout Image | {{ parent() }} </title>{% endblock %}
+{% block body %}
+    {% block content %}
+        <div class="mx-auto">
+            <h1>Créer une Image</h1>
+        </div>
+
+        {{ form_start(form) }}
+        
+            {{ form_row(form.nom, {'attr': {'class': 'form-control w-25'}}) }}
+
+            <div class="mx-auto col-2">
+                <button type="submit" class="form-control">Créer l'Image</button>
+            </div>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

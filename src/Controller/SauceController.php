@@ -2,40 +2,40 @@
 
 namespace App\Controller;
 
-use App\Entity\Oignon;
-use App\Form\OignonType;
+use App\Entity\Sauce;
+use App\Form\SauceType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class OignonController extends AbstractController
+class SauceController extends AbstractController
 {
-    #[Route('/oignon', name: 'app_oignon')]
+    #[Route('/sauce', name: 'app_sauce')]
     public function index(): Response
     {
-        return $this->render('oignon/index.html.twig', [
-            'controller_name' => 'OignonController',
+        return $this->render('sauce/index.html.twig', [
+            'controller_name' => 'SauceController',
         ]);
     }
 
-    #[Route('/oignon/add', name: 'oignon_new', methods: ['GET', 'POST'])]
+    #[Route('/sauce/add', name: 'sauce_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $oignon = new Oignon();
-        $form = $this->createForm(OignonType::class, $oignon);
+        $sauce = new Sauce();
+        $form = $this->createForm(SauceType::class, $sauce);
     
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($oignon);
+            $entityManager->persist($sauce);
             $entityManager->flush();
     
-            return $this->redirectToRoute('oignon_new');
+            return $this->redirectToRoute('sauce_new');
         }
     
-        return $this->render('oignon_new.html.twig', [
+        return $this->render('sauce_new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -2,40 +2,40 @@
 
 namespace App\Controller;
 
-use App\Entity\Oignon;
-use App\Form\OignonType;
+use App\Entity\Image;
+use App\Form\ImageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class OignonController extends AbstractController
+class ImageController extends AbstractController
 {
-    #[Route('/oignon', name: 'app_oignon')]
+    #[Route('/image', name: 'app_image')]
     public function index(): Response
     {
-        return $this->render('oignon/index.html.twig', [
-            'controller_name' => 'OignonController',
+        return $this->render('image/index.html.twig', [
+            'controller_name' => 'ImageController',
         ]);
     }
 
-    #[Route('/oignon/add', name: 'oignon_new', methods: ['GET', 'POST'])]
+    #[Route('/image/add', name: 'image_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $oignon = new Oignon();
-        $form = $this->createForm(OignonType::class, $oignon);
+        $image = new Image();
+        $form = $this->createForm(ImageType::class, $image);
     
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($oignon);
+            $entityManager->persist($image);
             $entityManager->flush();
     
-            return $this->redirectToRoute('oignon_new');
+            return $this->redirectToRoute('image_new');
         }
     
-        return $this->render('oignon_new.html.twig', [
+        return $this->render('image_new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -2,40 +2,40 @@
 
 namespace App\Controller;
 
-use App\Entity\Oignon;
-use App\Form\OignonType;
+use App\Entity\Pain;
+use App\Form\PainType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class OignonController extends AbstractController
+class PainController extends AbstractController
 {
-    #[Route('/oignon', name: 'app_oignon')]
+    #[Route('/pain', name: 'app_pain')]
     public function index(): Response
     {
-        return $this->render('oignon/index.html.twig', [
-            'controller_name' => 'OignonController',
+        return $this->render('pain/index.html.twig', [
+            'controller_name' => 'PainController',
         ]);
     }
 
-    #[Route('/oignon/add', name: 'oignon_new', methods: ['GET', 'POST'])]
+    #[Route('/pain/add', name: 'pain_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $oignon = new Oignon();
-        $form = $this->createForm(OignonType::class, $oignon);
+        $pain = new Pain();
+        $form = $this->createForm(PainType::class, $pain);
     
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($oignon);
+            $entityManager->persist($pain);
             $entityManager->flush();
     
-            return $this->redirectToRoute('oignon_new');
+            return $this->redirectToRoute('pain_new');
         }
     
-        return $this->render('oignon_new.html.twig', [
+        return $this->render('pain_new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
